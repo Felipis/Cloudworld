@@ -1,0 +1,2352 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloud World - Tudo sobre Computação em Nuvem</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1d4ed8;
+            --dark-color: #1e3a8a;
+            --light-color: #f8fafc;
+            --accent-color: #3b82f6;
+            --text-color: #1e293b;
+            --text-light: #64748b;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --bg-gradient: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+            --radius-sm: 0.25rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 0.75rem;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--light-color);
+            overflow-x: hidden;
+        }
+        
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            color: var(--dark-color);
+        }
+        
+        h1 { font-size: 2.5rem; }
+        h2 { font-size: 2rem; border-bottom: 2px solid var(--accent-color); padding-bottom: 0.5rem; }
+        h3 { font-size: 1.75rem; color: var(--primary-color); }
+        h4 { font-size: 1.5rem; }
+        h5 { font-size: 1.25rem; }
+        h6 { font-size: 1rem; }
+        
+        p {
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+        
+        a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        
+        a:hover {
+            color: var(--secondary-color);
+        }
+
+        /* Light color text for specific elements */
+        .card-header h4,
+        .header-content h1,
+        .card-header-style h4 {
+            color: var(--light-color) !important;
+        }
+        
+        /* Layout */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+        
+        /* Header */
+        header {
+            background: var(--bg-gradient);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: var(--shadow-md);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            z-index: 1;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+        
+        .logo i {
+            font-size: 2.5rem;
+            margin-right: 1rem;
+        }
+        
+        .tagline {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Navigation */
+        nav {
+            background-color: white;
+            box-shadow: var(--shadow-sm);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+        }
+        
+        .nav-logo {
+            font-weight: 700;
+            color: var(--dark-color);
+            display: flex;
+            align-items: center;
+        }
+        
+        .nav-logo i {
+            margin-right: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-item {
+            margin-left: 1.5rem;
+        }
+        
+        .nav-link {
+            color: var(--text-color);
+            font-weight: 500;
+            padding: 0.5rem 0;
+            position: relative;
+            transition: color 0.2s;
+        }
+        
+        .nav-link:hover {
+            color: var(--primary-color);
+        }
+        
+        .nav-link::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--dark-color);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: var(--bg-gradient);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+            position: relative;
+        }
+        
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1472&q=80') center/cover;
+            opacity: 0.15;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero h1 {
+            color: white;
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .hero p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: white;
+            color: var(--primary-color);
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+            color: var(--secondary-color);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid white;
+            color: white;
+            margin-left: 1rem;
+        }
+        
+        .btn-outline:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+        
+        /* Main Content */
+        main {
+            padding: 3rem 0;
+        }
+        
+        section {
+            margin-bottom: 3rem;
+            background-color: white;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+        }
+        
+        .section-header {
+            background: var(--bg-gradient);
+            color: white;
+            padding: 1.5rem;
+        }
+        
+        .section-header h2 {
+            color: white;
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+        
+        .content-block {
+            padding: 2rem;
+        }
+        
+        /* Cards */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .card-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 1.5rem;
+        }
+        
+        .card-body {
+            padding: 1.5rem;
+        }
+        
+        .card-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        /* Tables */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            box-shadow: var(--shadow-sm);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+        }
+        
+        .comparison-table th, .comparison-table td {
+            border: 1px solid #e2e8f0;
+            padding: 1rem;
+            text-align: left;
+        }
+        
+        .comparison-table th {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 600;
+        }
+        
+        .comparison-table tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+        
+        .comparison-table tr:hover {
+            background-color: #f1f5f9;
+        }
+        
+        /* Lists */
+        .benefits-list {
+            list-style: none;
+            margin: 1.5rem 0;
+        }
+        
+        .benefits-list li {
+            background-color: #f8fafc;
+            margin-bottom: 1rem;
+            padding: 1.5rem;
+            border-left: 4px solid var(--primary-color);
+            border-radius: 0 var(--radius-md) var(--radius-md) 0;
+            transition: transform 0.2s ease;
+        }
+        
+        .benefits-list li:hover {
+            transform: translateX(5px);
+        }
+        
+        .benefits-list li strong {
+            color: var(--primary-color);
+            font-size: 1.1rem;
+        }
+        
+        /* Features */
+        .feature {
+            display: flex;
+            margin-bottom: 2rem;
+            align-items: flex-start;
+        }
+        
+        .feature-icon {
+            flex-shrink: 0;
+            background-color: var(--primary-color);
+            color: white;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1.5rem;
+            font-size: 1.5rem;
+        }
+        
+        .feature-content {
+            flex-grow: 1;
+        }
+        
+        /* Tabs */
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #e2e8f0;
+            margin-bottom: 1.5rem;
+        }
+        
+        .tab {
+            padding: 0.75rem 1.5rem;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s ease;
+            font-weight: 500;
+        }
+        
+        .tab:hover {
+            color: var(--primary-color);
+        }
+        
+        .tab.active {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* Accordion */
+        .accordion-item {
+            margin-bottom: 1rem;
+            border: 1px solid #e2e8f0;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+        }
+        
+        .accordion-header {
+            background-color: #f8fafc;
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+        }
+        
+        .accordion-header:hover {
+            background-color: #f1f5f9;
+        }
+        
+        .accordion-content {
+            padding: 1rem 1.5rem;
+            display: none;
+        }
+        
+        .accordion-item.active .accordion-content {
+            display: block;
+        }
+        
+        /* Quiz */
+        .quiz-container {
+            background-color: white;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .quiz-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .quiz-progress {
+            height: 6px;
+            background-color: #e2e8f0;
+            border-radius: 3px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+        
+        .quiz-progress-bar {
+            height: 100%;
+            background-color: var(--primary-color);
+            width: 0%; 
+            transition: width 0.3s ease;
+        }
+        
+        .quiz-question {
+            margin-bottom: 1.5rem;
+            padding: 1.5rem;
+            background-color: #f8fafc;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .quiz-options {
+            margin-top: 1rem;
+        }
+        
+        .quiz-option {
+            margin-bottom: 0.75rem;
+        }
+        
+        .quiz-option input {
+            margin-right: 0.75rem;
+            opacity: 0;
+            position: absolute;
+            width: 0;
+            height: 0;
+        }
+        
+        .quiz-option label {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding-left: 2.5rem; 
+            min-height: 1.5rem; 
+        }
+        
+        .quiz-option label::before { 
+            content: "";
+            display: inline-block;
+            width: 1.25rem;
+            height: 1.25rem;
+            border: 2px solid #cbd5e1;
+            border-radius: 50%;
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            transition: all 0.2s ease;
+        }
+        
+        .quiz-option label::after { 
+            content: "";
+            display: inline-block;
+            width: 0.65rem; 
+            height: 0.65rem;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            position: absolute;
+            left: calc(0.3rem + 2px); 
+            top: 50%;
+            transform: translateY(-50%) scale(0); 
+            transition: transform 0.2s ease;
+        }
+        
+        .quiz-option input:checked + label::before {
+            border-color: var(--primary-color);
+        }
+        
+        .quiz-option input:checked + label::after {
+            transform: translateY(-50%) scale(1); 
+        }
+        
+        .quiz-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+        
+        .quiz-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .quiz-btn:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .quiz-btn:disabled {
+            background-color: #cbd5e1;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .result {
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
+            border-radius: var(--radius-md);
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        
+        .result.beginner { 
+            background-color: #f0fdf4;
+            color: #166534;
+            border: 1px solid #bbf7d0;
+        }
+        
+        .result.intermediate { 
+            background-color: #eff6ff;
+            color: #1e40af;
+            border: 1px solid #bfdbfe;
+        }
+        
+        .result.advanced { 
+            background-color: #ecfdf5; 
+            color: #065f46;     
+            border: 1px solid #a7f3d0; 
+        }
+        
+        .result-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 3rem 0;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-column h3 {
+            color: white;
+            margin-bottom: 1.5rem;
+            border-bottom: none;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+        
+        .footer-links a {
+            color: #e2e8f0;
+            transition: color 0.2s;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-links a {
+            color: white;
+            background-color: rgba(255, 255, 255, 0.1);
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--primary-color);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #94a3b8;
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .nav-menu {
+                position: fixed;
+                top: 0;
+                right: -100%; 
+                width: 80%;
+                max-width: 300px;
+                height: 100vh;
+                background-color: white;
+                flex-direction: column;
+                padding: 2rem;
+                box-shadow: var(--shadow-lg);
+                transition: right 0.3s ease-in-out; 
+                z-index: 1000;
+            }
+            
+            .nav-menu.active {
+                right: 0; 
+            }
+            
+            .nav-item {
+                margin: 0 0 1rem 0;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+                z-index: 1001; 
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .btn-container {
+                flex-direction: column;
+            }
+            
+            .btn, .btn-outline {
+                width: 100%;
+                margin: 0.5rem 0;
+            }
+            
+            .feature {
+                flex-direction: column;
+            }
+            
+            .feature-icon {
+                margin-bottom: 1rem;
+            }
+            
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.75rem; }
+            h3 { font-size: 1.5rem; }
+
+            .quiz-option {
+                padding: 10px 0 !important; 
+            }
+            
+            .quiz-option label {
+                font-size: 1rem !important; 
+                line-height: 1.5 !important;
+            }
+            
+            .quiz-btn {
+                padding: 12px 20px !important; 
+                font-size: 1rem !important; 
+                margin: 8px !important; 
+            }
+            
+            .quiz-question h4 {
+                font-size: 1.1rem !important; 
+                line-height: 1.4 !important;
+            }
+            
+            .result {
+                padding: 1.5rem !important; 
+            }
+            
+            .result p {
+                font-size: 1rem !important; 
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .container {
+                padding: 0 1rem;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .quiz-btn {
+                width: calc(100% - 20px) !important; 
+                font-size: 1rem !important;
+                padding: 0.8rem !important;
+                margin-top: 0.5rem !important;
+            }
+
+            .quiz-option label {
+                font-size: 0.9rem !important;
+                align-items: flex-start !important;
+                padding-left: 2.2rem; 
+            }
+
+            .result {
+                font-size: 0.9rem !important;
+                padding: 1rem !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-cloud"></i>
+                <h1 class="light-color-text">Cloud World</h1>
+            </div>
+            <p class="tagline">Tudo sobre Computação em Nuvem em um só lugar</p>
+        </div>
+    </header>
+    
+    <nav>
+        <div class="container nav-container">
+            <a href="#" class="nav-logo">
+                <i class="fas fa-cloud"></i>
+                <span>Cloud World</span>
+            </a>
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Abrir menu" aria-expanded="false" aria-controls="navMenu">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li class="nav-item"><a href="#sobre-nos" class="nav-link">Sobre nós</a></li>
+                <li class="nav-item"><a href="#o-que-e" class="nav-link">O que é</a></li>
+                <li class="nav-item"><a href="#modelos-servico" class="nav-link">Modelos</a></li>
+                <li class="nav-item"><a href="#beneficios" class="nav-link">Benefícios</a></li>
+                <li class="nav-item"><a href="#provedores" class="nav-link">Provedores</a></li>
+                <li class="nav-item"><a href="#servicos" class="nav-link">Serviços</a></li>
+                <li class="nav-item"><a href="#quiz" class="nav-link">Quiz</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <section class="hero">
+        <div class="hero-content container">
+            <h1>Domine a Computação em Nuvem</h1>
+            <p>Aprenda tudo sobre Cloud Computing, desde conceitos básicos até as mais avançadas estratégias de implementação.</p>
+            <div class="btn-container">
+                <a href="#o-que-e" class="btn">Começar a Explorar</a>
+                <a href="#quiz" class="btn btn-outline">Teste Seu Conhecimento</a>
+            </div>
+        </div>
+    </section>
+    
+    <main class="container">
+        <section id="o-que-e">
+            <div class="section-header">
+                <h2>O QUE É COMPUTAÇÃO EM NUVEM?</h2>
+            </div>
+            <div class="content-block">
+                <div class="feature">
+                    <div class="feature-icon">
+                        <i class="fas fa-cloud"></i>
+                    </div>
+                    <div class="feature-content">
+                        <p>A Computação em Nuvem (Cloud Computing) é um modelo tecnológico que oferece acesso remoto, sob demanda, a uma ampla gama de recursos e serviços de computação — como servidores, armazenamento de dados, redes, bancos de dados, softwares, ferramentas analíticas, entre outros — por meio da internet.</p>
+                    </div>
+                </div>
+                
+                <p>Esse modelo elimina a necessidade de manter infraestrutura física local, permitindo que empresas e usuários utilizem ambientes computacionais hospedados em grandes data centers mantidos por provedores especializados.</p>
+                
+                <p>Em vez de adquirir, instalar e manter servidores próprios, os usuários passam a consumir esses recursos como serviços, pagando apenas pelo que efetivamente utilizam. Essa característica torna a computação em nuvem uma solução altamente flexível, escalável e econômica, adaptando-se rapidamente às necessidades de crescimento ou redução de uso, sem desperdício de recursos.</p>
+                
+                <h3>COMPUTAÇÃO EM NUVEM VS ARMAZENAMENTO LOCAL</h3>
+                
+                <div class="card-grid">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="light-color-text">COMPUTAÇÃO EM NUVEM</h4>
+                        </div>
+                        <div class="card-body">
+                            <ul>
+                                <li><i class="fas fa-check-circle" style="color: var(--success-color);"></i> Servidores remotos em data centers globais</li>
+                                <li><i class="fas fa-check-circle" style="color: var(--success-color);"></i> Acesso de qualquer dispositivo com internet</li>
+                                <li><i class="fas fa-check-circle" style="color: var(--success-color);"></i> Sem ocupação de espaço local</li>
+                                <li><i class="fas fa-check-circle" style="color: var(--success-color);"></i> Manutenção e segurança pelo provedor</li>
+                                <li><i class="fas fa-check-circle" style="color: var(--success-color);"></i> Pagamento conforme uso</li>
+                                <li><i class="fas fa-check-circle" style="color: var(--success-color);"></i> Escalabilidade fácil</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header" style="background-color: var(--dark-color);">
+                            <h4 class="light-color-text">ARMAZENAMENTO LOCAL</h4>
+                        </div>
+                        <div class="card-body">
+                            <ul>
+                                <li><i class="fas fa-server" style="color: var(--text-light);"></i> Dispositivos físicos próprios</li>
+                                <li><i class="fas fa-server" style="color: var(--text-light);"></i> Acesso apenas do dispositivo local</li>
+                                <li><i class="fas fa-server" style="color: var(--text-light);"></i> Ocupa espaço físico</li>
+                                <li><i class="fas fa-server" style="color: var(--text-light);"></i> Manutenção e backup pelo usuário</li>
+                                <li><i class="fas fa-server" style="color: var(--text-light);"></i> Custo fixo de hardware</li>
+                                <li><i class="fas fa-server" style="color: var(--text-light);"></i> Capacidade limitada</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3>COMO FUNCIONA NA PRÁTICA</h3>
+                
+                <div class="card">
+                    <div class="card-body">
+                        <div class="feature">
+                            <div class="feature-icon" style="background-color: var(--success-color);">
+                                <i class="fas fa-lightbulb"></i>
+                            </div>
+                            <div class="feature-content">
+                                <p>Imagine que, em vez de guardar seus pertences importantes em armários físicos na sua casa, você os armazena em compartimentos seguros em um grande depósito com acesso fácil e rápido de qualquer lugar. A computação em nuvem funciona de maneira similar com seus dados e aplicações digitais.</p>
+                                <p>Em vez de estarem armazenados diretamente no seu computador ou servidor físico, eles residem em uma rede de servidores remotos, acessíveis através da internet. Essa "nuvem" de servidores oferece uma variedade de serviços, desde guardar seus arquivos até executar softwares complexos.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="modelos-servico">
+            <div class="section-header">
+                <h2>MODELOS DE SERVIÇO</h2>
+            </div>
+            <div class="content-block">
+                <p>Os modelos de serviço de cloud computing definem diferentes níveis de abstração e controle sobre os recursos de TI. Conheça os três principais:</p>
+                
+                <div class="tabs">
+                    <div class="tab active" data-tab="iaas">IaaS</div>
+                    <div class="tab" data-tab="paas">PaaS</div>
+                    <div class="tab" data-tab="saas">SaaS</div>
+                </div>
+                
+                <div class="tab-content active" id="iaas">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="light-color-text"><i class="fas fa-server"></i> Infraestrutura como Serviço (IaaS)</h4>
+                        </div>
+                        <div class="card-body">
+                            <p>Fornece recursos de computação básicos: servidores virtuais, armazenamento, redes e balanceadores de carga, máquinas virtuais sob demanda.</p>
+                            <p><strong>Exemplos:</strong> AWS EC2, Azure Virtual Machines, Google Compute Engine</p>
+                            <h5>Ideal Para:</h5>
+                            <ul>
+                                <li>Empresas que precisam de controle total sobre seu ambiente</li>
+                                <li>Migração de data centers locais para a nuvem</li>
+                                <li>Hospedagem de aplicações personalizadas</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="paas">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="light-color-text"><i class="fas fa-layer-group"></i> Plataforma como Serviço (PaaS)</h4>
+                        </div>
+                        <div class="card-body">
+                            <p>Oferece ambientes de desenvolvimento pré-configurados, ferramentas para criar, testar e implantar aplicações, bancos de dados gerenciados e serviços de integração contínua.</p>
+                            <p><strong>Exemplos:</strong> Google App Engine, Heroku, AWS Elastic Beanstalk, Azure App Service</p>
+                            <h5>Ideal Para:</h5>
+                            <ul>
+                                <li>Equipes de desenvolvimento ágil</li>
+                                <li>Startups que querem lançar produtos rapidamente</li>
+                                <li>Aplicações web e móveis</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="saas">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="light-color-text"><i class="fas fa-window-maximize"></i> Software como Serviço (SaaS)</h4>
+                        </div>
+                        <div class="card-body">
+                            <p>Aplicativos completos executados na nuvem, acessados via navegador, com atualizações automáticas e sem necessidade de instalação local.</p>
+                            <p><strong>Exemplos:</strong> Google Workspace, Salesforce, Microsoft 365, Dropbox, Slack</p>
+                            <h5>Ideal Para:</h5>
+                            <ul>
+                                <li>Empresas que precisam de soluções rápidas</li>
+                                <li>Ferramentas de produtividade (e-mail, editores de texto)</li>
+                                <li>Sistemas especializados (CRM, contabilidade)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="modelos-implantacao">
+            <div class="section-header">
+                <h2>MODELOS DE IMPLANTAÇÃO</h2>
+            </div>
+            <div class="content-block">
+                <p>Além dos modelos de serviço, a computação em nuvem pode ser implantada de diferentes formas, cada uma com suas características e casos de uso ideais:</p>
+                
+                <div class="card-grid">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="light-color-text"><i class="fas fa-globe"></i> Nuvem Pública</h4>
+                        </div>
+                        <div class="card-body">
+                            <p>Nesse modelo, grandes provedores mantêm data centers com milhares de servidores, oferecendo capacidade de processamento, armazenamento e rede para diversos clientes via internet.</p>
+                            <p>Os usuários contratam uma parte desses servidores, de forma semelhante a alugar um quarto em um hotel. Toda a manutenção, segurança e fornecimento de energia são responsabilidade do provedor.</p>
+                            <p><strong>Vantagens:</strong> Econômica, escalável, sem manutenção</p>
+                            <p><strong>Exemplos:</strong> AWS, Azure, Google Cloud</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="light-color-text"><i class="fas fa-lock"></i> Nuvem Privada</h4>
+                        </div>
+                        <div class="card-body">
+                            <p>Uma nuvem privada é desenvolvida e utilizada exclusivamente por uma única organização. Ela pode ser instalada localmente na sede da empresa ou hospedada por um provedor externo, mas sem o compartilhamento de recursos com outras entidades.</p>
+                            <p>Esse modelo oferece controle total sobre a infraestrutura e garante maior segurança, sendo ideal para empresas que lidam com dados confidenciais ou que necessitam de alta personalização.</p>
+                            <p><strong>Vantagens:</strong> Segurança, controle, personalização</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="light-color-text"><i class="fas fa-link"></i> Nuvem Híbrida</h4>
+                        </div>
+                        <div class="card-body">
+                            <p>A nuvem híbrida combina características da nuvem pública e da nuvem privada em um único ambiente integrado. Dados sensíveis são mantidos na parte privada, enquanto aplicações menos críticas podem ser executadas na nuvem pública.</p>
+                            <p>Esse modelo utiliza ferramentas de integração para permitir a movimentação de dados entre as duas nuvens de forma segura e eficiente, proporcionando flexibilidade e escalabilidade.</p>
+                            <p><strong>Vantagens:</strong> Flexibilidade, otimização de custos, segurança</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="light-color-text"><i class="fas fa-users"></i> Nuvem Comunitária</h4>
+                        </div>
+                        <div class="card-body">
+                            <p>Esse modelo é compartilhado por várias organizações com interesses ou necessidades em comum, como hospitais, universidades ou órgãos governamentais.</p>
+                            <p>A infraestrutura é configurada para atender a requisitos específicos, como a conformidade com leis de proteção de dados médicos ou educacionais. Os custos de manutenção e operação são divididos entre os participantes, resultando em uma solução economicamente viável.</p>
+                            <p><strong>Vantagens:</strong> Custo compartilhado, conformidade setorial</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="beneficios">
+            <div class="section-header">
+                <h2>BENEFÍCIOS DA COMPUTAÇÃO EM NUVEM</h2>
+            </div>
+            <div class="content-block">
+                <h3>ERA PRÉ-NUVEM VS ERA DA NUVEM</h3>
+                
+                <div class="card">
+                    <div class="card-body">
+                        <div class="feature">
+                            <div class="feature-icon" style="background-color: var(--danger-color);">
+                                <i class="fas fa-history"></i>
+                            </div>
+                            <div class="feature-content">
+                                <h4>Antes da Nuvem</h4>
+                                <ul>
+                                    <li>Altos investimentos em infraestrutura física</li>
+                                    <li>Servidores próprios e manutenção complexa</li>
+                                    <li>Atualizações manuais e demoradas</li>
+                                    <li>Capacidade fixa e difícil de escalar</li>
+                                    <li>Equipe de TI dedicada para gestão de hardware</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="feature">
+                            <div class="feature-icon" style="background-color: var(--success-color);">
+                                <i class="fas fa-cloud"></i>
+                            </div>
+                            <div class="feature-content">
+                                <h4>Com a Nuvem</h4>
+                                <ul>
+                                    <li>Infraestrutura virtual e escalável</li>
+                                    <li>Acesso online de qualquer dispositivo</li>
+                                    <li>Atualizações automáticas e contínuas</li>
+                                    <li>Pagamento baseado no uso real</li>
+                                    <li>Redução de custos iniciais</li>
+                                    <li>Acesso a tecnologias avançadas para todos</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3>PRINCIPAIS BENEFÍCIOS</h3>
+                
+                <div class="card-grid">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="light-color-text"><i class="fas fa-expand"></i> Escalabilidade</h4>
+                        </div>
+                        <div class="card-body">
+                            <p>A escalabilidade da nuvem permite que seus recursos de TI (processamento, armazenamento, largura de banda) se adaptem dinamicamente à demanda.</p>
+                            <p>Seja um pico de tráfego sazonal ou um crescimento constante, a nuvem garante que sua infraestrutura acompanhe o ritmo, expandindo ou contraindo recursos de forma automática e eficiente.</p>
+                            <p><strong>Impacto:</strong> Otimização de custos, performance garantida em qualquer cenário de demanda e agilidade para acompanhar o crescimento do seu negócio.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="light-color-text"><i class="fas fa-mobile-alt"></i> Flexibilidade</h4>
+                        </div>
+                        <div class="card-body">
+                            <p>A nuvem libera você das amarras de um local físico. Acesse seus dados, aplicações e ferramentas de TI de qualquer dispositivo conectado à internet, em qualquer lugar do mundo.</p>
+                            <p>Essa flexibilidade impulsiona o trabalho remoto, a colaboração global e a mobilidade da sua equipe.</p>
+                            <p><strong>Impacto:</strong> Maior produtividade, colaboração eficiente e a capacidade de trabalhar de forma eficaz em qualquer contexto.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="light-color-text"><i class="fas fa-dollar-sign"></i> Redução de Custos</h4>
+                        </div>
+                        <div class="card-body">
+                            <p>O modelo "pay-as-you-go" da computação em nuvem elimina a necessidade de grandes investimentos iniciais em hardware e software. Você paga apenas pelos recursos que consome, otimizando seu orçamento de TI.</p>
+                            <p><strong>Benefícios Adicionais:</strong> Elimine gastos com manutenção de servidores, energia elétrica para infraestrutura local e a necessidade de uma equipe de TI dedicada à gestão de hardware.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="light-color-text"><i class="fas fa-shield-alt"></i> Confiabilidade</h4>
+                        </div>
+                        <div class="card-body">
+                            <p>Os provedores de nuvem oferecem infraestruturas robustas com alta disponibilidade e redundância geográfica. Seus dados são replicados em múltiplos locais, garantindo que seus serviços permaneçam online.</p>
+                            <p><strong>Garantia de Serviço:</strong> SLAs (Acordos de Nível de Serviço) asseguram um tempo de atividade elevado, muitas vezes superior a 99,9%.</p>
+                            <p><strong>Proteção Contra Perdas:</strong> Data centers espelhados garantem a continuidade dos seus negócios, com failover automático em caso de problemas.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="light-color-text"><i class="fas fa-lock"></i> Segurança Avançada</h4>
+                        </div>
+                        <div class="card-body">
+                            <p>A segurança na nuvem é uma prioridade para os provedores, que implementam medidas avançadas para proteger seus dados e aplicações.</p>
+                            <p>Criptografia de ponta a ponta, backups automáticos, autenticação multifator e firewalls gerenciados são apenas algumas das camadas de proteção oferecidas.</p>
+                            <p><strong>Tecnologias de Ponta:</strong> Beneficie-se de recursos de segurança que muitas vezes estão além do alcance de investimentos individuais.</p>
+                            <p><strong>Resultados Comprovados:</strong> Empresas que migram para a nuvem frequentemente experimentam uma melhoria significativa em sua postura de segurança.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="provedores">
+            <div class="section-header">
+                <h2>PROVEDORES DE SERVIÇOS EM NUVEM</h2>
+            </div>
+            <div class="content-block">
+                <p>A computação em nuvem revolucionou a maneira como empresas e indivíduos consomem tecnologia. Provedores de serviços em nuvem (Cloud Service Providers — CSPs) oferecem infraestrutura, plataformas e softwares sob demanda, eliminando a necessidade de grandes investimentos em hardware e reduzindo custos operacionais.</p>
+                
+                <p>Mais do que simples fornecedores, os CSPs são peças-chave da transformação digital, permitindo que organizações de todos os portes acessem tecnologias avançadas como inteligência artificial, análise de dados e segurança cibernética.</p>
+                
+                <h3>PRINCIPAIS PROVEDORES DE NUVEM EM 2025</h3>
+                
+                <div class="card-grid">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="light-color-text"><i class="fab fa-aws"></i> Amazon Web Services (AWS)</h4>
+                        </div>
+                        <div class="card-body">
+                            <p><strong>Líder global</strong> em participação de mercado, oferece mais de 200 serviços e cobertura geográfica.</p>
+                            <p><strong>Serviços principais:</strong> EC2, S3, Lambda, RDS</p>
+                            <p><strong>Pontos fortes:</strong> Escalabilidade, segurança, ecossistema completo</p>
+                            <p><strong>Ideal para:</strong> Empresas que precisam de infraestrutura robusta e global</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header" style="background-color: #0078d4;">
+                            <h4 class="light-color-text"><i class="fab fa-microsoft"></i> Microsoft Azure</h4>
+                        </div>
+                        <div class="card-body">
+                            <p><strong>Integrado</strong> com soluções Microsoft como Windows Server e Office 365.</p>
+                            <p><strong>Serviços principais:</strong> Virtual Machines, Azure SQL, Blob Storage</p>
+                            <p><strong>Pontos fortes:</strong> Ambientes corporativos híbridos, integração com Microsoft</p>
+                            <p><strong>Ideal para:</strong> Negócios que já utilizam tecnologias da Microsoft</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header" style="background-color: #4285f4;">
+                            <h4 class="light-color-text"><i class="fab fa-google"></i> Google Cloud (GCP)</h4>
+                        </div>
+                        <div class="card-body">
+                            <p><strong>Destaque</strong> em análise de dados, aprendizado de máquina e sustentabilidade.</p>
+                            <p><strong>Serviços principais:</strong> Compute Engine, BigQuery, TensorFlow</p>
+                            <p><strong>Pontos fortes:</strong> Big Data, IA, custos otimizados</p>
+                            <p><strong>Ideal para:</strong> Empresas data-driven e focadas em inovação</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header" style="background-color: #f80000;">
+                            <h4 class="light-color-text"><i class="fas fa-database"></i> Oracle Cloud</h4>
+                        </div>
+                        <div class="card-body">
+                            <p><strong>Focado</strong> em bancos de dados e soluções empresariais.</p>
+                            <p><strong>Serviços principais:</strong> Autonomous DB, MySQL HeatWave</p>
+                            <p><strong>Pontos fortes:</strong> Desempenho em Oracle DB, preços competitivos</p>
+                            <p><strong>Ideal para:</strong> Cargas de trabalho críticas e bancos de dados</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header" style="background-color: #052049;">
+                            <h4 class="light-color-text"><i class="fas fa-brain"></i> IBM Cloud</h4>
+                        </div>
+                        <div class="card-body">
+                            <p><strong>Especializada</strong> em nuvem híbrida e IA.</p>
+                            <p><strong>Serviços principais:</strong> Watson, Db2, Cloudant</p>
+                            <p><strong>Pontos fortes:</strong> Setores regulamentados, mainframes</p>
+                            <p><strong>Ideal para:</strong> Bancos, saúde e soluções híbridas</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3>COMPARAÇÃO DE SERVIÇOS E PREÇOS</h3>
+                
+                <div class="tabs">
+                    <div class="tab active" data-tab="precos">Preços</div>
+                    <div class="tab" data-tab="servicos-comp">Serviços</div>
+                </div>
+                
+                <div class="tab-content active" id="precos">
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Serviço</th>
+                                <th>AWS</th>
+                                <th>Azure</th>
+                                <th>Google Cloud</th>
+                                <th>Oracle Cloud</th>
+                                <th>IBM Cloud</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Computação (vCPU/hora)</strong></td>
+                                <td>$0.022 (t4g.small)</td>
+                                <td>$0.020 (B1s)</td>
+                                <td>$0.018 (e2-micro)</td>
+                                <td>$0.015 (VM.Standard.E2.1)</td>
+                                <td>$0.025 (VPC)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Armazenamento (GB/mês)</strong></td>
+                                <td>$0.023 (S3 Standard)</td>
+                                <td>$0.022 (Blob Hot)</td>
+                                <td>$0.020 (Standard)</td>
+                                <td>$0.018 (Object)</td>
+                                <td>$0.025 (COS)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Banco de Dados (GB/hora)</strong></td>
+                                <td>$0.115 (RDS MySQL)</td>
+                                <td>$0.110 (Azure DB)</td>
+                                <td>$0.105 (Cloud SQL)</td>
+                                <td>$0.095 (Autonomous DB)</td>
+                                <td>$0.120 (Db2)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>CDN (por GB)</strong></td>
+                                <td>$0.085</td>
+                                <td>$0.080</td>
+                                <td>$0.075</td>
+                                <td>$0.070</td>
+                                <td>$0.090</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Transferência de Dados (GB/saída)</strong></td>
+                                <td>$0.09 (primeiros 10TB)</td>
+                                <td>$0.085</td>
+                                <td>$0.08</td>
+                                <td>$0.075</td>
+                                <td>$0.095</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p class="text-muted"><em>Preços aproximados, podendo variar por região e descontos corporativos (2025)</em></p>
+                </div>
+                
+                <div class="tab-content" id="servicos-comp">
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Categoria</th>
+                                <th>AWS</th>
+                                <th>Azure</th>
+                                <th>Google Cloud</th>
+                                <th>Oracle Cloud</th>
+                                <th>IBM Cloud</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Computação</strong></td>
+                                <td>EC2, Lambda, Fargate</td>
+                                <td>Virtual Machines, Functions</td>
+                                <td>Compute Engine, Cloud Run</td>
+                                <td>Compute VM, Functions</td>
+                                <td>Virtual Servers, Code Engine</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Armazenamento</strong></td>
+                                <td>S3, EBS, Glacier</td>
+                                <td>Blob Storage, Disk Storage</td>
+                                <td>Cloud Storage, Persistent Disk</td>
+                                <td>Object Storage, Block Volumes</td>
+                                <td>Cloud Object Storage</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Banco de Dados</strong></td>
+                                <td>RDS, DynamoDB, Aurora</td>
+                                <td>SQL Database, Cosmos DB</td>
+                                <td>Cloud SQL, Firestore</td>
+                                <td>Autonomous DB, MySQL HeatWave</td>
+                                <td>Db2, Cloudant</td>
+                            </tr>
+                            <tr>
+                                <td><strong>IA e Machine Learning</strong></td>
+                                <td>SageMaker, Rekognition</td>
+                                <td>Azure ML, Cognitive Services</td>
+                                <td>Vertex AI, TensorFlow</td>
+                                <td>OCI AI, Data Science</td>
+                                <td>Watson Studio, Watson ML</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Redes e CDN</strong></td>
+                                <td>CloudFront, VPC</td>
+                                <td>Azure CDN, Virtual Network</td>
+                                <td>Cloud CDN, VPC</td>
+                                <td>FastConnect, Edge Services</td>
+                                <td>Cloud Internet Services</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Serverless</strong></td>
+                                <td>AWS Lambda</td>
+                                <td>Azure Functions</td>
+                                <td>Cloud Functions</td>
+                                <td>Oracle Functions</td>
+                                <td>IBM Code Engine</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <h3>COMO ESCOLHER O PROVEDOR IDEAL</h3>
+                
+                <div class="accordion">
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>1. Entenda Suas Necessidades</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>Antes de tudo, mapeie os requisitos do seu projeto ou negócio:</p>
+                            <ul>
+                                <li><strong>Requisitos Técnicos:</strong> Computação, armazenamento, rede</li>
+                                <li><strong>Segurança e Conformidade:</strong> Certificações necessárias</li>
+                                <li><strong>Orçamento:</strong> Modelo de custo preferido</li>
+                                <li><strong>Escalabilidade:</strong> Variação de demanda esperada</li>
+                                <li><strong>Suporte:</strong> Nível de suporte necessário</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>2. Compare os Provedores</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>Cada provedor tem suas forças e fraquezas:</p>
+                            <ul>
+                                <li><strong>AWS:</strong> Ecossistema completo, mas com preços mais altos</li>
+                                <li><strong>Azure:</strong> Excelente integração com Microsoft, mas complexo</li>
+                                <li><strong>Google Cloud:</strong> Melhor para dados e IA, mas menor presença global</li>
+                                <li><strong>Oracle:</strong> Ótimo para bancos de dados, mas ecossistema menor</li>
+                                <li><strong>IBM:</strong> Ideal para setores regulados, mas menos competitivo em preço</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>3. Escolha o Modelo de Implantação</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <ul>
+                                <li><strong>Nuvem Pública:</strong> Econômica e escalável (AWS, Azure, GCP)</li>
+                                <li><strong>Nuvem Privada:</strong> Maior controle e segurança (IBM, VMware)</li>
+                                <li><strong>Nuvem Híbrida:</strong> Combina público e privado</li>
+                                <li><strong>Multi-nuvem:</strong> Usa múltiplos provedores públicos</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>4. Realize um Teste (PoC)</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <ul>
+                                <li>Experimente os free tiers e créditos gratuitos</li>
+                                <li>Teste desempenho com cargas reais</li>
+                                <li>Avalie a facilidade de migração e integração</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>5. Avalie Suporte e Documentação</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <ul>
+                                <li>Verifique os níveis de suporte disponíveis</li>
+                                <li>Avalie a qualidade da documentação</li>
+                                <li>Considere a comunidade de usuários</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="servicos">
+            <div class="section-header">
+                <h2>SERVIÇOS DE COMPUTAÇÃO EM NUVEM</h2>
+            </div>
+            <div class="content-block">
+                <p>A computação em nuvem oferece uma ampla gama de serviços que cobrem todas as necessidades de TI modernas. Conheça os principais:</p>
+                
+                <div class="card-grid">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="light-color-text"><i class="fas fa-server"></i> Computação</h4>
+                        </div>
+                        <div class="card-body">
+                            <p>Serviços que fornecem capacidade de processamento sob demanda:</p>
+                            <ul>
+                                <li>Máquinas virtuais (VMs) escaláveis</li>
+                                <li>Contêineres e orquestração (Kubernetes)</li>
+                                <li>Computação serverless (funções como serviço)</li>
+                                <li>Seleção de CPU, memória e GPU conforme necessidade</li>
+                            </ul>
+                            <p><strong>Exemplos:</strong> AWS EC2, Azure VMs, Google Compute Engine</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="light-color-text"><i class="fas fa-database"></i> Armazenamento</h4>
+                        </div>
+                        <div class="card-body">
+                            <p>Soluções para guardar e acessar dados de forma segura:</p>
+                            <ul>
+                                <li>Armazenamento de objetos (para arquivos)</li>
+                                <li>Armazenamento em bloco (para sistemas de arquivos)</li>
+                                <li>Armazenamento em arquivo (para compartilhamento)</li>
+                                <li>Camadas de acesso (quente, frio, arquivamento)</li>
+                            </ul>
+                            <p><strong>Exemplos:</strong> Amazon S3, Azure Blob Storage, Google Cloud Storage</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="light-color-text"><i class="fas fa-network-wired"></i> Rede</h4>
+                        </div>
+                        <div class="card-body">
+                            <p>Infraestrutura para conectar seus recursos na nuvem:</p>
+                            <ul>
+                                <li>Redes virtuais privadas (VPC/VNet)</li>
+                                <li>Balanceamento de carga e gateways</li>
+                                <li>Content Delivery Networks (CDN)</li>
+                                <li>Conexões híbridas (nuvem + local)</li>
+                            </ul>
+                            <p><strong>Exemplos:</strong> AWS VPC, Azure Virtual Network, Google Cloud Load Balancing</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="light-color-text"><i class="fas fa-chart-bar"></i> Análise de Dados</h4>
+                        </div>
+                        <div class="card-body">
+                            <p>Ferramentas para processar e analisar grandes volumes de dados:</p>
+                            <ul>
+                                <li>Data warehouses e data lakes</li>
+                                <li>Processamento de big data (Hadoop, Spark)</li>
+                                <li>Ferramentas de BI e visualização</li>
+                                <li>Análise em tempo real</li>
+                            </ul>
+                            <p><strong>Exemplos:</strong> Amazon Redshift, Azure Synapse, Google BigQuery</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="light-color-text"><i class="fas fa-robot"></i> Machine Learning</h4>
+                        </div>
+                        <div class="card-body">
+                            <p>Serviços para construir e implantar modelos de IA:</p>
+                            <ul>
+                                <li>APIs pré-treinadas (visão, linguagem, etc.)</li>
+                                <li>Plataformas para treinar modelos customizados</li>
+                                <li>Ferramentas de MLOps</li>
+                                <li>Infraestrutura com GPUs/TPUs</li>
+                            </ul>
+                            <p><strong>Exemplos:</strong> AWS SageMaker, Azure ML, Google Vertex AI</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="light-color-text"><i class="fas fa-shield-alt"></i> Segurança</h4>
+                        </div>
+                        <div class="card-body">
+                            <p>Serviços para proteger seus dados e aplicações:</p>
+                            <ul>
+                                <li>Gerenciamento de identidade e acesso (IAM)</li>
+                                <li>Criptografia e proteção de dados</li>
+                                <li>Firewalls e proteção contra DDoS</li>
+                                <li>Monitoramento e conformidade</li>
+                            </ul>
+                            <p><strong>Exemplos:</strong> AWS IAM, Azure Security Center, Google Cloud Security</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="quiz">
+            <div class="section-header">
+                <h2>TESTE SEU CONHECIMENTO</h2>
+            </div>
+            <div class="content-block">
+                <div class="quiz-container">
+                    <div class="quiz-header">
+                        <h3>Quiz sobre Cloud Computing</h3>
+                        <p>Responda às perguntas para testar seu conhecimento sobre computação em nuvem</p>
+                    </div>
+                    
+                    <div class="quiz-progress">
+                        <div class="quiz-progress-bar" id="quizProgress"></div>
+                    </div>
+                    
+                    <div id="quizQuestionsContainer">
+                        </div>
+                                        
+                    <div id="quizResult" class="result" style="display: none;">
+                        </div>
+                </div>
+            </div>
+        </section>
+    
+        <section id="sobre-nos">
+            <div class="section-header">
+                <h2>SOBRE NÓS</h2>
+            </div>
+            <div class="content-block">
+                <p>
+                    Bem-vindos ao Cloud World! Este site é um projeto de extensão desenvolvido por estudantes do primeiro e segundo semestre do curso de Sistemas de Informação, Ciência da Computação e Análise e Desenvolvimento de Sistemas da Faculdade UniDrummond.
+                </p>
+                <p>
+                    Nosso principal objetivo com o Cloud World é descomplicar o mundo da Cloud Computing, oferecendo uma introdução clara, didática e atualizada sobre seus principais conceitos, modelos e aplicações. Nosso conteúdo é especialmente voltado para iniciantes na área de TI, estudantes e curiosos por tecnologia, tornando informações essenciais acessíveis e fáceis de entender.
+                </p>
+                <p>
+                    Este projeto nos permitiu aplicar, na prática, conhecimentos valiosos adquiridos em sala de aula, como desenvolvimento web, design responsivo, organização de conteúdo e interação com o usuário. Para reforçar o aprendizado, incluímos até um quiz interativo para testar seu conhecimento sobre Cloud Computing. Acreditamos que, ao disseminar conhecimento objetivo sobre a computação em nuvem, podemos contribuir para o desenvolvimento e a capacitação da comunidade em um dos pilares mais importantes da TI moderna.
+                </p>
+                <h3>Alunos Responsáveis</h3>
+                <ul>
+                    <li><strong>Camila Oliveira Ferrari</strong> - oliveiracamila765@gmail.com</li>
+                    <li><strong>Henrique Michael Oliveira dos Santos</strong> - henriqueoliver.m.s@gmail.com</li>
+                    <li><strong>Giovanni Rodrigues Santini</strong> - giovannisantini13@gmail.com</li>
+                    <li><strong>Felipe Emiliano da Silva</strong> - femiliianoo@gmail.com</li>
+                </ul>
+            </div>
+        </section>
+
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Cloud World</h3>
+                    <p style="color: var(--light-color);">Tudo sobre cloud computing em um lugar só</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Links Rápidos</h3>
+                    <ul class="footer-links">
+                        <li><a href="#o-que-e">O que é Cloud Computing</a></li>
+                        <li><a href="#modelos-servico">Modelos de Serviço</a></li>
+                        <li><a href="#beneficios">Benefícios</a></li>
+                        <li><a href="#provedores">Provedores</a></li>
+                        <li><a href="#quiz">Quiz</a></li>
+                        <li><a href="#sobre-nos">Sobre nós</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contato</h3>
+                    <ul class="footer-links">
+                        <li>oliveiracamila765@gmail.com</li>
+                        <li>henriqueoliver.m.s@gmail.com</li>
+                        <li>giovannisantini13@gmail.com</li>
+                        <li>femiliianoo@gmail.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Cloud World. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+<script>
+// Variáveis globais para o quiz
+let userAnswers = []; 
+let selectedQuestions = []; 
+
+// Array com todas as questões do quiz
+const quizQuestions = [
+    // NÍVEL INICIANTE
+    {
+        level: "beginner",
+        question: "O que é Computação em Nuvem?",
+        options: [
+            "Um tipo de rede social para empresas.",
+            "Um sistema que permite armazenar dados em servidores físicos locais.",
+            "Um modelo que oferece recursos de TI pela internet, sem infraestrutura física.",
+            "Um software de edição de vídeos online."
+        ],
+        answer: 2 
+    },
+    {
+        level: "beginner",
+        question: "Qual destes é um exemplo de serviço em Nuvem?",
+        options: [
+            "Google Drive.",
+            "Windows 11.",
+            "Disco Rígido externo.",
+            "Roteador Wi-Fi."
+        ],
+        answer: 0
+    },
+    {
+        level: "beginner",
+        question: "O que significa “SaaS”?",
+        options: [
+            "Software as a Service (aplicativos prontos via internet).",
+            "Sistema de armazenamento automático.",
+            "Servidor de acesso seguro.",
+            "Sistema analógico de segurança."
+        ],
+        answer: 0
+    },
+    {
+        level: "beginner",
+        question: "Qual dessas alternativas é uma vantagem da Nuvem?",
+        options: [
+            "Exige altos gastos em hardwares.",
+            "Acesso apenas de um computador fixo.",
+            "Permite trabalhar de qualquer lugar com internet.",
+            "Não oferece backups automáticos."
+        ],
+        answer: 2
+    },
+    {
+        level: "beginner",
+        question: "O que é um provedor de serviços em nuvem?",
+        options: [
+            "Uma empresa que fornece dispositivos de armazenamento físico.",
+            "Uma empresa que oferece recursos de computação, armazenamento e rede pela internet.",
+            "Um software que gerencia senhas na nuvem.",
+            "Um sistema operacional baseado em Linux."
+        ],
+        answer: 1
+    },
+    {
+        level: "beginner",
+        question: "Qual dos seguintes é um exemplo de provedor de serviços em nuvem?",
+        options: [
+            "WordPress.",
+            "Microsoft Azure.",
+            "Google Chrome.",
+            "Adobe Photoshop."
+        ],
+        answer: 1
+    },
+    {
+        level: "beginner",
+        question: "Qual dos seguintes é um desafio comum da computação em nuvem?",
+        options: [
+            "Falta de acesso à internet.",
+            "Falta de espaço em disco local.",
+            "Dificuldade em instalar drivers.",
+            "Problemas com a configuração do monitor."
+        ],
+        answer: 0
+    },
+    {
+        level: "beginner",
+        question: "A segurança dos dados em nuvem depende principalmente de:",
+        options: [
+            "A capacidade de processamento do usuário.",
+            "Os protocolos de segurança implementados pelo provedor.",
+            "O sistema operacional do usuário.",
+            "A resolução da tela do dispositivo."
+        ],
+        answer: 1
+    },
+    {
+        level: "beginner",
+        question: "Qual das alternativas representa uma característica da computação em nuvem pública?",
+        options: [
+            "Recursos dedicados exclusivos da empresa.",
+            "Infraestrutura interna gerenciada pela própria equipe.",
+            "Recursos compartilhados e acessados via internet.",
+            "Maior controle físico e compliance interno."
+        ],
+        answer: 2
+    },
+    {
+        level: "beginner",
+        question: "Qual é o tipo de nuvem que combina características da nuvem pública e privada?",
+        options: [
+            "Nuvem Virtual.",
+            "Nuvem Isolada.",
+            "Nuvem Híbrida.",
+            "Nuvem Paralela."
+        ],
+        answer: 2
+    },
+    {
+        level: "beginner",
+        question: "Qual das alternativas representa corretamente um benefício do armazenamento em nuvem?",
+        options: [
+            "Acesso apenas local aos dados.",
+            "Alta disponibilidade e durabilidade através de replicação.",
+            "Necessidade de manter servidores físicos.",
+            "Backup manual obrigatório."
+        ],
+        answer: 1
+    },
+    {
+        level: "beginner",
+        question: "Qual é uma característica da hospedagem de websites em nuvem?",
+        options: [
+            "Escalabilidade manual apenas.",
+            "Necessidade de IP fixo por usuário.",
+            "Balanceamento de carga e uso de CDN.",
+            "Hospedagem apenas durante horário comercial."
+        ],
+        answer: 2
+    },
+    {
+        level: "beginner",
+        question: "O que é criptografia de dados em nuvem?",
+        options: [
+            "Um tipo de backup manual.",
+            "Um método para transformar dados em código para protegê-los.",
+            "Um software de acesso remoto.",
+            "Uma ferramenta de migração."
+        ],
+        answer: 1
+    },
+    {
+        level: "beginner",
+        question: "Qual destes é um exemplo de autenticação?",
+        options: [
+            "Backup automático.",
+            "Firewall de nuvem.",
+            "Senha ou autenticação multifator.",
+            "Controle de qualidade."
+        ],
+        answer: 2
+    },
+
+    // NÍVEL INTERMEDIÁRIO
+    {
+        level: "intermediate",
+        question: "Qual modelo da nuvem é ideal para uma startup com orçamento limitado?",
+        options: [
+            "Nuvem Privada.",
+            "Nuvem Pública.",
+            "Nuvem Híbrida.",
+            "Nuvem Comunitária."
+        ],
+        answer: 1
+    },
+    {
+        level: "intermediate",
+        question: "O que é “IaaS”?",
+        options: [
+            "Um aplicativo de mensagens.",
+            "Infraestrutura como Serviço (aluguel de servidores virtuais).",
+            "Um tipo de antivírus.",
+            "Software de edição de imagens."
+        ],
+        answer: 1
+    },
+    {
+        level: "intermediate",
+        question: "Qual destes NÃO é um provedor de Nuvem?",
+        options: [
+            "Amazon Web Services (AWS).",
+            "Microsoft Azure.",
+            "Google Cloud.",
+            "Tesla Cloud."
+        ],
+        answer: 3
+    },
+    {
+        level: "intermediate",
+        question: "Por que empresas usam Nuvem Híbrida?",
+        options: [
+            "Para ter apenas um tipo de servidor.",
+            "Para combinar segurança (privada) com escalabilidade (pública).",
+            "Porque é mais barato que a Nuvem Pública.",
+            "Porque não requer internet."
+        ],
+        answer: 1
+    },
+    {
+        level: "intermediate",
+        question: "Qual modelo de serviço em nuvem oferece um ambiente completo de desenvolvimento para criar, testar e implementar aplicativos?",
+        options: [
+            "SaaS.",
+            "PaaS.",
+            "IaaS.",
+            "FaaS."
+        ],
+        answer: 1
+    },
+    {
+        level: "intermediate",
+        question: "Em um ambiente de nuvem híbrida, os recursos de TI são distribuídos entre:",
+        options: [
+            "Data centers físicos e dispositivos móveis.",
+            "Redes locais e armazenamento em fita.",
+            "Nuvens públicas e privadas.",
+            "Aplicações SaaS e servidores físicos."
+        ],
+        answer: 2
+    },
+    {
+        level: "intermediate",
+        question: "A técnica de orquestração em nuvem é utilizada principalmente para:",
+        options: [
+            "Organizar serviços físicos.",
+            "Gerenciar serviços em contêineres.",
+            "Criar redes locais.",
+            "Configurar hardware externo."
+        ],
+        answer: 1
+    },
+    {
+        level: "intermediate",
+        question: "Um risco potencial ao migrar dados para a nuvem é:",
+        options: [
+            "Perda de controle sobre a localização dos dados.",
+            "Diminuição da capacidade de armazenamento.",
+            "Redução da largura de banda.",
+            "Aumento do consumo de energia."
+        ],
+        answer: 0
+    },
+    {
+        level: "intermediate",
+        question: "Em um ambiente multi-cloud, um desafio significativo é:",
+        options: [
+            "Sincronizar diferentes dispositivos móveis.",
+            "Gerenciar a compatibilidade entre provedores distintos.",
+            "Melhorar a qualidade da tela.",
+            "Reduzir o uso de aplicativos locais."
+        ],
+        answer: 1
+    },
+    {
+        level: "intermediate",
+        question: "A latência na nuvem é um problema relacionado a:",
+        options: [
+            "Cibersegurança.",
+            "Tempo de resposta das aplicações.",
+            "Consumo de energia.",
+            "Backup local."
+        ],
+        answer: 1
+    },
+    {
+        level: "intermediate",
+        question: "O que motiva muitas empresas a adotarem a estratégia multicloud?",
+        options: [
+            "Reduzir a complexidade de TI.",
+            "Conformidade com leis de copyright.",
+            "Evitar dependência de um único fornecedor.",
+            "Aumentar o número de servidores locais."
+        ],
+        answer: 2
+    },
+    {
+        level: "intermediate",
+        question: "Uma das tendências globais na computação em nuvem que visa melhorar a experiência do cliente em tempo real é:",
+        options: [
+            "Cloud Privada.",
+            "Nuvem Sustentável.",
+            "Supercloud.",
+            "Infraestrutura em Tempo Real."
+        ],
+        answer: 3
+    },
+    {
+        level: "intermediate",
+        question: "Um dos principais benefícios da nuvem para o e-commerce é:",
+        options: [
+            "Redução da experiência do usuário.",
+            "Capacidade limitada de armazenamento.",
+            "Escalabilidade durante picos de demanda.",
+            "Manutenção de estoque físico centralizado."
+        ],
+        answer: 2
+    },
+    {
+        level: "intermediate",
+        question: "Como a nuvem auxilia o agronegócio brasileiro?",
+        options: [
+            "Limitando o acesso a sensores.",
+            "Proibindo automação de irrigação.",
+            "Processando dados de sensores para decisões inteligentes.",
+            "Impedindo uso de drones em plantações."
+        ],
+        answer: 2
+    },
+    {
+        level: "intermediate",
+        question: "Qual é o principal objetivo da conformidade regulatória em ambientes de nuvem?",
+        options: [
+            "Reduzir o tempo de migração para a nuvem.",
+            "Proteger apenas os dados financeiros.",
+            "Garantir que as operações sigam leis e padrões de segurança.",
+            "Evitar o uso de criptografia."
+        ],
+        answer: 2
+    },
+    {
+        level: "intermediate",
+        question: "O que caracteriza o modelo de segurança \"Zero Trust\"?",
+        options: [
+            "Acesso irrestrito dentro da rede.",
+            "Confiança automática em usuários internos.",
+            "Verificação contínua e nenhuma confiança por padrão.",
+            "Uso exclusivo de senhas."
+        ],
+        answer: 2
+    },
+
+    // NÍVEL AVANÇADO
+    {
+        level: "advanced",
+        question: "O que é Multi-Cloud?",
+        options: [
+            "Usa apenas um provedor de Nuvem.",
+            "Um tipo de rede social.",
+            "Um servidor físico local.",
+            "Usar múltiplos provedores para diferentes necessidades."
+        ],
+        answer: 3
+    },
+    {
+        level: "advanced",
+        question: "Qual desses é um desafio da Nuvem Comunitária?",
+        options: [
+            "Decisões compartilhadas entre organizações.",
+            "Altos custos individuais.",
+            "Não oferece segurança.",
+            "É mais lenta que outras Nuvens."
+        ],
+        answer: 0
+    },
+    {
+        level: "advanced",
+        question: "O que é Serveless Computing?",
+        options: [
+            "Um servidor físico dedicado.",
+            "Um computador sem internet.",
+            "Um modelo onde o provedor gerencia automaticamente a infraestrutura.",
+            "Um tipo de banco de dados local."
+        ],
+        answer: 2
+    },
+    {
+        level: "advanced",
+        question: "Qual tecnologia complementa a Nuvem para processar dados em tempo real?",
+        options: [
+            "Edge Computing.",
+            "Impressoras 3D.",
+            "Redes Cabeadas.",
+            "Sistemas Analógicos."
+        ],
+        answer: 0
+    },
+    {
+        level: "advanced",
+        question: "Em um ambiente multi-cloud, a principal vantagem é:",
+        options: [
+            "Reduzir custos de infraestrutura.",
+            "Aumentar a dependência de um único provedor.",
+            "Evitar falhas críticas ao diversificar provedores.",
+            "Aumentar a latência de rede."
+        ],
+        answer: 2
+    },
+    {
+        level: "advanced",
+        question: "No contexto da nuvem, o termo “cloud bursting” refere-se a:",
+        options: [
+            "Redundância de servidores para alta disponibilidade.",
+            "Transferência automática de cargas de trabalho para a nuvem pública em picos de demanda.",
+            "Criação de novas máquinas virtuais sob demanda.",
+            "Implementação de firewalls entre nuvens públicas e privadas."
+        ],
+        answer: 1
+    },
+    {
+        level: "advanced",
+        question: "Em casos de falha de um provedor de nuvem, um plano de contingência eficaz deve incluir:",
+        options: [
+            "A substituição imediata de todos os dispositivos físicos.",
+            "A replicação dos dados em outro provedor ou data center.",
+            "A atualização do sistema operacional.",
+            "O aumento da capacidade de armazenamento local."
+        ],
+        answer: 1
+    },
+    {
+        level: "advanced",
+        question: "A conformidade regulatória em ambientes de nuvem pode ser um desafio devido a:",
+        options: [
+            "Variedade de leis de privacidade em diferentes jurisdições.",
+            "Inexistência de políticas de backup.",
+            "Falta de serviços de armazenamento em nuvem.",
+            "Limitação de largura de banda da internet."
+        ],
+        answer: 0
+    },
+    {
+        level: "advanced",
+        question: "O que é “Supercloud”, segundo o documento?",
+        options: [
+            "Um servidor que não depende de rede.",
+            "Um tipo de hardware proprietário de nuvem.",
+            "Uma camada de abstração que permite que aplicações rodem em qualquer plataforma de nuvem.",
+            "Uma rede física conectada por satélites."
+        ],
+        answer: 2
+    },
+    {
+        level: "advanced",
+        question: "Qual é a principal importância do monitoramento em ambientes de cloud híbrida e multicloud?",
+        options: [
+            "Garantir menor uso de memória RAM.",
+            "Realizar backups físicos de hardware.",
+            "Detectar problemas, otimizar desempenho e prever custos.",
+            "Substituir firewalls em redes privadas."
+        ],
+        answer: 2
+    },
+    {
+        level: "advanced",
+        question: "Um benefício estratégico da computação em nuvem para startups brasileiras é:",
+        options: [
+            "Custos fixos elevados.",
+            "Necessidade de contratar especialistas em redes.",
+            "Foco no core business com agilidade e inovação.",
+            "Dependência de hardware local."
+        ],
+        answer: 2
+    },
+    {
+        level: "advanced",
+        question: "Qual serviço de nuvem permite o treinamento e deploy de modelos de Machine Learning?",
+        options: [
+            "AWS SageMaker.",
+            "Excel Online.",
+            "WordPress.",
+            "Facebook."
+        ],
+        answer: 0
+    },
+    {
+        level: "advanced",
+        question: "Qual o papel da ISO/IEC 27017:2015 na segurança em nuvem?",
+        options: [
+            "Garantir backups físicos em servidores locais.",
+            "Prover diretrizes específicas para segurança da informação em ambientes de nuvem.",
+            "Substituir o firewall da empresa.",
+            "Automatizar o controle de acesso."
+        ],
+        answer: 1
+    },
+    {
+        level: "advanced",
+        question: "Qual é uma desvantagem da estratégia de migração \"Lift and Shift\"?",
+        options: [
+            "Necessita de refatoração completa dos aplicativos.",
+            "Aumenta o desempenho dos sistemas migrados.",
+            "Pode ter custos mais altos a longo prazo e menor desempenho.",
+            "Reduz os riscos de segurança durante a migração."
+        ],
+        answer: 2
+    }
+];
+
+/**
+ * Seleciona aleatoriamente 10 questões.
+ */
+function getRandomQuestions() {
+    const beginner = quizQuestions.filter(q => q.level === "beginner");
+    const intermediate = quizQuestions.filter(q => q.level === "intermediate");
+    const advanced = quizQuestions.filter(q => q.level === "advanced");
+
+    const shuffledBeginner = beginner.sort(() => 0.5 - Math.random()).slice(0, 4);
+    const shuffledIntermediate = intermediate.sort(() => 0.5 - Math.random()).slice(0, 4);
+    const shuffledAdvanced = advanced.sort(() => 0.5 - Math.random()).slice(0, 2);
+    
+    let finalQuestions = [...shuffledBeginner, ...shuffledIntermediate, ...shuffledAdvanced];
+    return finalQuestions.sort(() => 0.5 - Math.random());
+}
+
+/**
+ * Exibe as questões selecionadas.
+ */
+function displaySelectedQuestions() {
+    const quizContainer = document.getElementById('quizQuestionsContainer');
+    quizContainer.innerHTML = ''; 
+    
+    selectedQuestions.forEach((question, index) => {
+        let optionsHtml = '';
+        question.options.forEach((option, i) => {
+            optionsHtml += `
+                <div class="quiz-option">
+                    <input type="radio" id="q${index}_o${i}" name="q${index}" value="${i}">
+                    <label for="q${index}_o${i}">${option}</label>
+                </div>`;
+        });
+
+        quizContainer.innerHTML += `
+            <div class="quiz-question">
+                <h4>${index + 1}. ${question.question}</h4>
+                <div class="quiz-options">${optionsHtml}</div>
+            </div>`;
+    });
+
+    quizContainer.innerHTML += `
+        <div style="text-align: center; margin-top: 2rem;">
+            <button class="quiz-btn" onclick="showResults()">Finalizar Quiz</button>
+        </div>`;
+
+    document.getElementById('quizQuestionsContainer').style.display = 'block';
+    document.getElementById('quizResult').style.display = 'none';
+    document.getElementById('quizProgress').style.width = '0%'; 
+}
+
+/**
+ * Calcula e exibe os resultados.
+ */
+function showResults() {
+    userAnswers = selectedQuestions.map((_, index) => {
+        const selectedOption = document.querySelector(`input[name="q${index}"]:checked`);
+        return selectedOption ? parseInt(selectedOption.value) : null; 
+    });
+
+    let score = 0;
+    selectedQuestions.forEach((question, index) => {
+        if (userAnswers[index] === question.answer) {
+            score++;
+        }
+    });
+
+    const percentage = (score / selectedQuestions.length) * 100;
+    let levelText; 
+    let levelClass = ''; 
+
+    if (percentage >= 80) {
+        levelText = "Avançado";
+        levelClass = 'advanced';
+    } else if (percentage >= 50) {
+        levelText = "Intermediário";
+        levelClass = 'intermediate';
+    } else {
+        levelText = "Iniciante";
+        levelClass = 'beginner';
+    }
+
+    const resultDiv = document.getElementById('quizResult');
+    resultDiv.innerHTML = `
+        <div class="result-content"> 
+            <i class="fas fa-award result-icon"></i>
+            <h3>Resultado do Quiz</h3>
+            <p>Você acertou ${score} de ${selectedQuestions.length} questões (${percentage.toFixed(0)}%).</p>
+            <p>Seu nível de conhecimento é: <strong>${levelText}</strong></p>
+            <button class="quiz-btn" onclick="startQuiz(true)" style="margin-top:1rem;">Tentar Novamente com Novas Perguntas</button>
+        </div>`;
+    
+    resultDiv.className = `result ${levelClass}`; 
+    resultDiv.style.display = 'block'; 
+    document.getElementById('quizQuestionsContainer').style.display = 'none'; 
+    document.getElementById('quizProgress').style.width = '100%'; 
+
+    resultDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+/**
+ * Inicia o quiz.
+ * @param {boolean} shouldScroll - Indica se a página deve rolar para a seção do quiz.
+ */
+function startQuiz(shouldScroll = false) { 
+    selectedQuestions = getRandomQuestions(); 
+    displaySelectedQuestions(); 
+    
+    if (shouldScroll) {
+        const quizSection = document.getElementById('quiz');
+        if (quizSection) {
+            quizSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }
+}
+
+// Event Listeners
+document.addEventListener('DOMContentLoaded', () => {
+    // Inicia o quiz automaticamente ao carregar a página, sem rolar
+    startQuiz(false); 
+
+    const quizLinks = document.querySelectorAll('a[href="#quiz"]');
+    quizLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault(); 
+            startQuiz(true); // Inicia o quiz e rola a página
+        });
+    });
+
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const navMenu = document.getElementById('navMenu');
+
+    if (mobileMenuBtn && navMenu) {
+        mobileMenuBtn.addEventListener('click', () => {
+            const isExpanded = mobileMenuBtn.getAttribute('aria-expanded') === 'true' || false;
+            mobileMenuBtn.setAttribute('aria-expanded', !isExpanded);
+            navMenu.classList.toggle('active'); 
+        });
+
+        const navLinks = navMenu.querySelectorAll('.nav-link');
+        navLinks.forEach(link => {
+            link.addEventListener('click', (event) => { // Adicionado 'event' como parâmetro
+                if (navMenu.classList.contains('active')) {
+                    navMenu.classList.remove('active');
+                    mobileMenuBtn.setAttribute('aria-expanded', 'false');
+                }
+                 // Se o link clicado for para o quiz, inicia o quiz e rola
+                if (link.getAttribute('href') === '#quiz') {
+                    event.preventDefault(); // Previne o comportamento padrão do link de âncora
+                    startQuiz(true);
+                }
+            });
+        });
+    }
+
+    const accordionItems = document.querySelectorAll('.accordion-item');
+    accordionItems.forEach(item => {
+        const header = item.querySelector('.accordion-header');
+        header.addEventListener('click', () => {
+            accordionItems.forEach(otherItem => {
+                if (otherItem !== item && otherItem.classList.contains('active')) {
+                    otherItem.classList.remove('active');
+                    otherItem.querySelector('.accordion-content').style.display = 'none';
+                    otherItem.querySelector('.fa-chevron-down').style.transform = 'rotate(0deg)';
+                }
+            });
+            item.classList.toggle('active');
+            const content = item.querySelector('.accordion-content');
+            const icon = header.querySelector('.fa-chevron-down');
+            if (item.classList.contains('active')) {
+                content.style.display = 'block';
+                icon.style.transform = 'rotate(180deg)'; 
+            } else {
+                content.style.display = 'none';
+                icon.style.transform = 'rotate(0deg)'; 
+            }
+        });
+    });
+
+    const tabs = document.querySelectorAll('.tab');
+    const tabContents = document.querySelectorAll('.tab-content');
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            tabs.forEach(t => t.classList.remove('active'));
+            tabContents.forEach(c => c.classList.remove('active'));
+            tab.classList.add('active');
+            const targetContentId = tab.getAttribute('data-tab');
+            document.getElementById(targetContentId).classList.add('active');
+        });
+    });
+});
+</script>
+</body>
+</html>
